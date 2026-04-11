@@ -18,11 +18,25 @@ SKIP_PATTERNS = [
     r"^space image$",
     r"^ad$",
     r"^get emi offers$",
+    r"^based on\s*\d+\s*reviews?$",
+    r"^\d+\s*reviews?$",
+    r"^all\s+.*cars?$",
+    r"^view\s+.*colours?$",
+    r"^view\s+.*offers?$",
 ]
 
 def should_skip(val: str) -> bool:
     v = val.strip().lower()
-    return any(re.match(p, v) for p in SKIP_PATTERNS)
+    # Skip if matches any pattern
+    if any(re.match(p, v) for p in SKIP_PATTERNS):
+        return True
+    # Skip cells that contain "based on" + number (review counts embedded in value)
+    if re.search(r"based on\s*\d+\s*reviews?", v):
+        return True
+    # Skip standalone rating numbers like "4.7"
+    if re.match(r"^\d\.\d$", v):
+        return True
+    return False
 
 def clean_val(v: str) -> str:
     v = v.strip()
@@ -32,8 +46,13 @@ def clean_val(v: str) -> str:
         return "No"
     if re.match(r"^(-+|–+|—+|na|n/a|not available|not applicable)$", v, re.IGNORECASE):
         return "N/A"
-    v = re.sub(r"\s*space image\s*", "", v, flags=re.IGNORECASE).strip()
+    v = re.sub(r"\s*space image\s*", "", v, flags=re.IGNORECASE)
+    # Clean price — keep only first line (remove EMI/extra text)
+    if re.match(r"^rs", v, re.IGNORECASE):
+        v = v.split("\n")[0].strip()
     v = v.rstrip("*").strip()
+    if not v:
+        return "N/A"
     return v
 
 def parse_clipboard(raw: str):
