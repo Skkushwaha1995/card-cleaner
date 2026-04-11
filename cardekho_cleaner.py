@@ -28,7 +28,7 @@ def clean_val(v: str) -> str:
     v = v.strip()
     if re.match(r"^(yes|✓|✔|☑|✅|\u2713|\u2714|\u2705)$", v, re.IGNORECASE):
         return "Yes"
-    if re.match(r"^(no|✗|✘|☒|❌|-|–|\u2717|\u2718|\u274c)$", v, re.IGNORECASE):
+    if re.match(r"^(no|✗|✘|☒|❌|\u2717|\u2718|\u274c)$", v, re.IGNORECASE):
         return "No"
     if re.match(r"^(-+|–+|—+|na|n/a|not available|not applicable)$", v, re.IGNORECASE):
         return "N/A"
@@ -266,7 +266,7 @@ if st.session_state.merged_df is not None:
                 styles.append("color: #9C0006; font-weight: bold")
             elif val == "N/A":
                 styles.append("color: #888888; font-style: italic")
-            else
+            else:
                 styles.append("")
         return styles
 
