@@ -1,4 +1,4 @@
-# 🚗 CarDekho Data Cleaner
+# 🚗 Carcare Data Cleaner
 
 CarDekho se copy kiya pipe-separated data ko clean karke Excel/CSV mein download karo.  
 Multiple cars ka data alag-alag paste karo — **automatically column-wise merge** ho jayega!
@@ -33,7 +33,7 @@ streamlit run cardekho_cleaner.py
 
 ## 📖 Kaise Use Karein?
 
-### Step 1 — CarDekho Console se data copy karo
+### Step 1 — Carcare Console se data copy karo
 
 1. CarDekho compare page kholo
 2. `F12` dabao → **Console** tab
@@ -63,7 +63,7 @@ alert("Copy ho gaya!");
 
 ```
 cardekho-cleaner/
-├── cardekho_cleaner.py   # Main Streamlit app
+├── carcare_cleaner.py   # Main Streamlit app
 ├── requirements.txt      # Python dependencies
 ├── .gitignore
 └── README.md
