@@ -30,6 +30,8 @@ def clean_val(v: str) -> str:
         return "Yes"
     if re.match(r"^(no|✗|✘|☒|❌|-|–|\u2717|\u2718|\u274c)$", v, re.IGNORECASE):
         return "No"
+    if re.match(r"^(-+|–+|—+|na|n/a|not available|not applicable)$", v, re.IGNORECASE):
+        return "N/A"
     v = re.sub(r"\s*space image\s*", "", v, flags=re.IGNORECASE).strip()
     v = v.rstrip("*").strip()
     return v
@@ -154,6 +156,9 @@ def to_excel(df: pd.DataFrame) -> bytes:
                     cell.font = Font(color="276221", bold=True)
                 elif str(cell.value) == "No":
                     cell.font = Font(color="9C0006", bold=True)
+                elif str(cell.value) == "N/A":
+                    cell.font = Font(color="888888", italic=True)
+                    cell.fill = PatternFill("solid", fgColor="F2F2F2")
 
         # Auto column width
         for col in ws.columns:
@@ -259,7 +264,9 @@ if st.session_state.merged_df is not None:
                 styles.append("color: #276221; font-weight: bold")
             elif val == "No":
                 styles.append("color: #9C0006; font-weight: bold")
-            else:
+            elif val == "N/A":
+                styles.append("color: #888888; font-style: italic")
+            else
                 styles.append("")
         return styles
 
