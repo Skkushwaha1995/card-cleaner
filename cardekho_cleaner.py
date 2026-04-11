@@ -23,6 +23,8 @@ SKIP_PATTERNS = [
     r"^all\s+.*cars?$",
     r"^view\s+.*colours?$",
     r"^view\s+.*offers?$",
+    r"^.*\s+colours?$",
+    r"^.*\s+colors?$",
 ]
 
 def should_skip(val: str) -> bool:
@@ -47,6 +49,9 @@ def clean_val(v: str) -> str:
     if re.match(r"^(-+|–+|—+|na|n/a|not available|not applicable)$", v, re.IGNORECASE):
         return "N/A"
     v = re.sub(r"\s*space image\s*", "", v, flags=re.IGNORECASE)
+    # Remove colour list values
+    v = re.sub(r"\w+\s+colours?.*$", "", v, flags=re.IGNORECASE).strip()
+    v = re.sub(r"\w+\s+colors?.*$", "", v, flags=re.IGNORECASE).strip()
     # Clean price — keep only first line (remove EMI/extra text)
     if re.match(r"^rs", v, re.IGNORECASE):
         v = v.split("\n")[0].strip()
