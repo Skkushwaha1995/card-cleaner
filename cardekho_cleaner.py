@@ -334,32 +334,13 @@ with st.expander("📖 Kaise Use Karein?"):
 ```javascript
 let rows = document.querySelectorAll("table tr");
 let result = "";
-
-function getCellText(cell) {
-    // Hidden span check (CarDekho Yes/No trick)
-    let hiddenSpan = cell.querySelector("span.hide");
-    if (hiddenSpan) return hiddenSpan.textContent.trim();
-
-    // icon-check / icon-cross class check
-    let icon = cell.querySelector("[class*='icon-check'], [class*='icon-tick']");
-    if (icon) return "Yes";
-    let iconNo = cell.querySelector("[class*='icon-cross'], [class*='icon-close'], [class*='icon-no']");
-    if (iconNo) return "No";
-
-    // Fallback: innerText
-    let text = cell.innerText.trim();
-    if (!text || text === "-") return "N/A";
-    return text;
-}
-
 rows.forEach(row => {
     let cells = row.querySelectorAll("td, th");
-    let line = Array.from(cells).map(c => getCellText(c)).join(" | ");
-    if (line.trim()) result += line + "\n";
+    let line = Array.from(cells).map(c => c.innerText.trim()).join(" | ");
+    if(line.trim()) result += line + "\\n";
 });
-
 copy(result);
-alert("Copy ho gaya! Yes/No bhi sahi capture hue!");
+alert("Copy ho gaya!");
 ```
 
 **Step 4 — Yahan paste karo**
