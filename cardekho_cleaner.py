@@ -42,9 +42,9 @@ def should_skip(val: str) -> bool:
 
 def clean_val(v: str) -> str:
     v = v.strip()
-    if re.match(r"^(yes|✓|✔|☑|✅|\u2713|\u2714|\u2705)$", v, re.IGNORECASE):
+    if re.match(r"^(yes|true|1|✓|✔|☑|✅|\u2713|\u2714|\u2705)$", v, re.IGNORECASE):
         return "Yes"
-    if re.match(r"^(no|✗|✘|☒|❌|\u2717|\u2718|\u274c)$", v, re.IGNORECASE):
+    if re.match(r"^(no|false|0|✗|✘|☒|❌|\u2717|\u2718|\u274c)$", v, re.IGNORECASE):
         return "No"
     if re.match(r"^(-+|–+|—+|na|n/a|not available|not applicable)$", v, re.IGNORECASE):
         return "N/A"
